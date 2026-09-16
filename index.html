@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zion RAG Eval Kit — score your RAG pipeline</title>
+<meta name="description" content="Interactive checklist to score retrieval quality, groundedness, latency and safety of your RAG pipeline. Free tool by Zion Tech Group.">
+<style>
+:root{--bg:#10101a;--card:#1a1a2b;--acc:#c792ea;--txt:#eceaf6;--mut:#a39ec4}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt)}
+header{padding:48px 24px 24px;text-align:center;background:linear-gradient(160deg,#2b1a45,#10101a)}
+h1{margin:0 0 8px}.wrap{max-width:860px;margin:0 auto;padding:24px}
+.cat{margin:24px 0 8px;color:var(--acc);font-weight:600;text-transform:uppercase;font-size:.8rem;letter-spacing:.06em}
+.item{display:flex;gap:12px;background:var(--card);border:1px solid #2c2c46;border-radius:12px;padding:14px;margin:8px 0;align-items:center}
+.item input{width:20px;height:20px;accent-color:var(--acc)}
+.score{position:sticky;bottom:16px;background:#241d3d;border:1px solid #463a72;border-radius:14px;padding:16px;text-align:center;font-size:1.2rem;margin-top:24px}
+.bar{height:10px;background:#17132a;border-radius:6px;margin-top:8px;overflow:hidden}.bar>div{height:100%;background:var(--acc);width:0;transition:width .3s}
+footer{padding:32px 24px;text-align:center;color:var(--mut);font-size:.85rem;border-top:1px solid #26243a;margin-top:40px}
+footer a{color:var(--acc);text-decoration:none;margin:0 8px}
+</style>
+</head>
+<body>
+<header><h1>📊 Zion RAG Eval Kit</h1>
+<p>Grade your retrieval-augmented generation pipeline across 5 dimensions. Check what you've verified — get a readiness score.</p></header>
+<div class="wrap" id="app"></div>
+<footer>Part of the <a href="https://ziontechgroup.com">Zion Tech Group</a> AI apps network ·
+<a href="https://ziontechgroup.com/zion-mcp-finder/">MCP Server Finder</a>
+<a href="https://ziontechgroup.com/zion-llm-cost-calculator/">LLM Cost Calculator</a>
+<a href="https://ziontechgroup.com/zion-ai-release-radar/">AI Release Radar</a>
+<a href="https://ziontechgroup.com/ai-knowledge-base-rag-platform/">Zion RAG platform</a></footer>
+<script>
+const C={
+'Retrieval quality':['Golden Q&A dataset (50+ real queries) built','Recall@k measured against golden set','Chunk size/overlap A/B tested','Hybrid search (vector + BM25) evaluated','Metadata filters validated on real docs'],
+'Groundedness & hallucination':['Answer-citation coverage measured','Faithfulness judged on 100+ samples (human or LLM-judge)','Refusal behavior tested for out-of-corpus queries','Prompt-injection attempts tested on retrieved content'],
+'Latency & cost':['p95 end-to-end latency measured','Embedding + LLM cost per query known','Caching strategy for repeated queries','Streaming responses for perceived speed'],
+'Relevance & freshness':['Document ingestion/update pipeline automated','Stale-document TTL or re-index policy','Per-source quality weighting'],
+'Ops & safety':['Eval runs in CI on every prompt/index change','Regression alerts on score drops','PII redaction on indexed content','Access control respected per document','Rollback plan for bad index/prompt releases']};
+const app=document.getElementById('app');let html='';
+for(const[cat,items]of Object.entries(C)){html+=`<div class="cat">${cat}</div>`+items.map(t=>`<label class="item"><input type="checkbox"><span>${t}</span></label>`).join('');}
+html+=`<div class="score"><div>Readiness score: <b id="pct">0%</b> <span id="verdict"></span></div><div class="bar"><div id="fill"></div></div></div>`;
+app.innerHTML=html;
+app.addEventListener('change',()=>{const boxes=[...app.querySelectorAll('input[type=checkbox]')];const n=boxes.filter(b=>b.checked).length;const p=Math.round(n/boxes.length*100);
+document.getElementById('pct').textContent=p+'%';document.getElementById('fill').style.width=p+'%';
+document.getElementById('verdict').textContent=p>=90?'— production ready 🚀':p>=70?'— nearly there':'— keep hardening';});
+</script>
+</body>
+</html>
