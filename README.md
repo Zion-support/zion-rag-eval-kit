@@ -1,10 +1,16 @@
-# Zion RAG Eval Kit
+# RAG Eval Kit
 
-Interactive 21-point checklist to score RAG pipeline readiness: retrieval quality, groundedness, latency/cost, freshness, ops & safety.
+Score retrieval quality, groundedness and latency of your RAG pipeline.
 
 **Live app:** https://ziontechgroup.com/zion-rag-eval-kit/
 
-Part of the [Zion Tech Group](https://ziontechgroup.com) AI apps network:
-- [MCP Server Finder](https://ziontechgroup.com/zion-mcp-finder/)
-- [LLM Cost Calculator](https://ziontechgroup.com/zion-llm-cost-calculator/)
-- [AI Release Radar](https://ziontechgroup.com/zion-ai-release-radar/)
+## Features
+- Retrieval precision/recall scoring
+- Groundedness and citation accuracy
+- Latency budgets per stage
+
+## Zion App Network
+Part of the [Zion App Network](https://ziontechgroup.com/apps/).
+Related: [RAG Forge](https://github.com/Zion-support/rag-forge) · [Eval Generator](https://github.com/Zion-support/zion-eval-generator) · [Vector DB Comparator](https://github.com/Zion-support/zion-vector-db-comparator) · [Embedding Picker](https://github.com/Zion-support/zion-embedding-picker)
+
+© 2026 Zion Tech Group
